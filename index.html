@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html>
 
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+
 <body>
 
 <h2>ROCK PAPER SCISSORS</h2>
 <h3>Round: </h3><h3 id="round">0</h3>
 
-<button type="button"
-onclick="game()">Rock</button>
-<button type="button"
-onclick="game()">Paper</button>
-<button type="button"
-onclick="game()">Scissors</button>
+<p>User:</p><p id="demo"></p>
 
-<p id="demo"></p>
+<button
+onclick="game()" class = "myInput" value="1" id="rock">Rock <i class="fas fa-hand-rock"></i></button>
+<button 
+onclick="game()" class = "myInput" value="2" id="paper">Paper <i class="fas fa-sticky-note"></i></button>
+<button 
+onclick="game()" class = "myInput" value="3" id="scissors">Scissors <i class="fas fa-cut"></i></button>
 
 </body>
 </html> 
 
 <script>
 let roundNum =1;
+let computer;
+let userDisplay = [`<i class="fas fa-hand-rock"></i>`, `<i class="fas fa-sticky-note"></i>`, `<i class="fas fa-cut"></i>`];
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(1);
+  max = Math.floor(3);
+  computer = Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+}
 function game() {
-  const computer = Math.floor(Math.random() * 101);
-  document.getElementById("demo").innerHTML = computer;
+  var inputVal = document.getElementsByClassName("myInput").value;
+  console.log(inputVal);
+  getRandomIntInclusive();
+  document.getElementById("demo").innerHTML = userDisplay[this.value-1];
   document.getElementById("round").innerHTML = roundNum;
   roundNum+=1;
   }

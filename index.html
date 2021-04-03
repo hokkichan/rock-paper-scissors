@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h2>ROCK PAPER SCISSORS</h2>
+<h3>Round: </h3><h3 id="round">0</h3>
+
+<button type="button"
+onclick="game()">Rock</button>
+<button type="button"
+onclick="game()">Paper</button>
+<button type="button"
+onclick="game()">Scissors</button>
+
+<p id="demo"></p>
+
+</body>
+</html> 
+
+<script>
+let roundNum =1;
+function game() {
+  const computer = Math.floor(Math.random() * 101);
+  document.getElementById("demo").innerHTML = computer;
+  document.getElementById("round").innerHTML = roundNum;
+  roundNum+=1;
+  }
+</script>

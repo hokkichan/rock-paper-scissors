@@ -2,41 +2,77 @@
 <html>
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<style>
+  #gameConsole {
+  	display: inline;
+  }
+</style>
 
 
 <body>
 
 <h2>ROCK PAPER SCISSORS</h2>
-<h3>Round: </h3><h3 id="round">0</h3>
-
-<p>User:</p><p id="demo"></p>
+<div id="gameConsole">
+<h3 id="round">Round: 0</h3>
+<h3 id="result">Result: </h3>
+<h3 id="playerStreak">Player Streak: 0</h3>
+<h3 id="computerStreak">Computer Streak: 0</h3>
+<p id="player" style="font-size:30px">User:</p>
+<p id="computerDisplay" style="font-size:30px">Computer:</p>
+</div>
 
 <button
-onclick="game()" class = "myInput" value="1" id="rock">Rock <i class="fas fa-hand-rock"></i></button>
+onclick="captureValue('rock')" value="1" id="rock">Rock <i class="fas fa-hand-rock"></i></button>
 <button 
-onclick="game()" class = "myInput" value="2" id="paper">Paper <i class="fas fa-sticky-note"></i></button>
+onclick="captureValue('paper')" value="2" id="paper">Paper <i class="fas fa-sticky-note"></i></button>
 <button 
-onclick="game()" class = "myInput" value="3" id="scissors">Scissors <i class="fas fa-cut"></i></button>
+onclick="captureValue('scissors')" value="3" id="scissors">Scissors <i class="fas fa-cut"></i></button>
 
 </body>
 </html> 
 
 <script>
-let roundNum =1;
+let roundNum =0;
 let computer;
 let userDisplay = [`<i class="fas fa-hand-rock"></i>`, `<i class="fas fa-sticky-note"></i>`, `<i class="fas fa-cut"></i>`];
+let inputValCopy;
+let currentResult;
+let playerWin =0;
+let computerWin=0;
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(1);
   max = Math.floor(3);
   computer = Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
+
+function captureValue(id) {
+  let inputVal = document.getElementById(id).value;
+  inputValCopy = inputVal;
+  game();
+}
+
+function determineWinner() {
+  if (inputValCopy == 1 && computer ==1 || inputValCopy == 2 && computer == 2 || inputValCopy == 3 && computer == 3) {
+  	currentResult = "Draw"
+  } else if (inputValCopy == 1 && computer == 2 || inputValCopy == 2 && computer == 3 || inputValCopy == 3 && computer == 1) {
+  	currentResult = "Computer Wins";
+  	computerWin+=1;
+  } else {
+  	currentResult = "Player Wins";
+  	playerWin+=1;
+  }
+}
+
 function game() {
-  var inputVal = document.getElementsByClassName("myInput").value;
-  console.log(inputVal);
   getRandomIntInclusive();
-  document.getElementById("demo").innerHTML = userDisplay[this.value-1];
-  document.getElementById("round").innerHTML = roundNum;
   roundNum+=1;
+  determineWinner()
+  document.getElementById("round").innerHTML = `Round: ${roundNum}`;
+  document.getElementById("result").innerHTML = `Result: ${currentResult}`;
+  document.getElementById("playerStreak").innerHTML = `Player Streak: ${playerWin}`;
+  document.getElementById("computerStreak").innerHTML = `Computer Streak: ${computerWin}`;
+  document.getElementById("player").innerHTML = `User: ${userDisplay[inputValCopy-1]}`;
+  document.getElementById("computerDisplay").innerHTML = `Computer: ${userDisplay[computer-1]}`;
   }
 </script>
